@@ -1,7 +1,8 @@
 # typed: false
+
 RSpec.describe "games/new", type: :view do
   before(:each) do
-    assign(:game, new_game(
+    assign(:game, Game.new(
       location: "MyString",
       first_team_id: 1,
       second_team_id: 1,

@@ -5,6 +5,8 @@ class PredictionsController < ApplicationController
   end
 
   def create
+    predictor = ServiceLocator.instance.get_service(:predictor)
+
     predictor.learn(Team.all, Game.all)
     @prediction = predictor.predict(
         Team.find(params["first_team"]["id"]),

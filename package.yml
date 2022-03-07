@@ -2,6 +2,6 @@
 enforce_dependencies: true
 enforce_privacy: false
 dependencies:
-- packages/prediction_ui
 - packages/predictor
+- packages/service_locator
 
