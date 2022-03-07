@@ -2,7 +2,8 @@
 enforce_dependencies: true
 enforce_privacy: false
 dependencies:
-- packages/rails_shims
 - packages/games
+- packages/predictor_interface
+- packages/rails_shims
 - packages/teams
 
