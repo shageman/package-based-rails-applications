@@ -1,3 +1,4 @@
+# typed: false
 RSpec.describe "teams/new", type: :view do
   before(:each) do
     assign(:team, new_team(

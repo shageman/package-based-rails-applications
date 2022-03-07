@@ -1,3 +1,4 @@
+# typed: false
 RSpec.describe "the prediction process", type: :system do
   before :each do
     team1 = create_team name: "UofL"
