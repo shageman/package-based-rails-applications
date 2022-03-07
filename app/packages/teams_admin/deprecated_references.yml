@@ -11,9 +11,3 @@
     - dependency
     files:
     - app/packages/teams_admin/controllers/teams_controller.rb
-app/packages/teams:
-  "::Team":
-    violations:
-    - dependency
-    files:
-    - app/packages/teams_admin/controllers/teams_controller.rb

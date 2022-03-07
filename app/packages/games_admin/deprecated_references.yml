@@ -11,9 +11,3 @@
     - dependency
     files:
     - app/packages/games_admin/controllers/games_controller.rb
-app/packages/games:
-  "::Game":
-    violations:
-    - dependency
-    files:
-    - app/packages/games_admin/controllers/games_controller.rb

@@ -11,9 +11,3 @@
     - dependency
     files:
     - app/packages/games/models/game.rb
-app/packages/teams:
-  "::Team":
-    violations:
-    - dependency
-    files:
-    - app/packages/games/models/game.rb
