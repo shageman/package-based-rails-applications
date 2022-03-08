@@ -1,10 +1,10 @@
-# typed: false
 class PredictionsController < ApplicationController
   def new
     @teams = Team.all
   end
 
   def create
+    predictor = Predictor.new
     predictor.learn(Team.all, Game.all)
     @prediction = predictor.predict(
         Team.find(params["first_team"]["id"]),
