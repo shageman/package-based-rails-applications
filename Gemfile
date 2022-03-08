@@ -85,3 +85,4 @@ gem 'trueskill'
 gem 'tapioca'
 gem 'sorbet-rails'
 
+gem 'testgem', path: 'testgem'

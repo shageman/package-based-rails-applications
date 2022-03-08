@@ -6,6 +6,11 @@ GIT
     pocky (2.0.0)
       ruby-graphviz (~> 1)
 
+PATH
+  remote: testgem
+  specs:
+    testgem (0.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -368,6 +373,7 @@ DEPENDENCIES
   sqlite3 (~> 1.4)
   stimulus-rails
   tapioca
+  testgem!
   trueskill
   turbo-rails
   tzinfo-data
