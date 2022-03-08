@@ -18,8 +18,8 @@ class Predictor
     end
 
     games.each do |game|
-      first_team_rating = @teams_lookup[game.first_team_id].rating
-      second_team_rating = @teams_lookup[game.second_team_id].rating
+      first_team_rating = @teams_lookup[game.first_team.id].rating
+      second_team_rating = @teams_lookup[game.second_team.id].rating
       game_result = game.winning_team == 1 ?
           [[first_team_rating], [second_team_rating]] :
           [[second_team_rating], [first_team_rating]]
@@ -49,4 +49,5 @@ class Predictor
   end
   private_constant :TeamLookup
 end
+
 

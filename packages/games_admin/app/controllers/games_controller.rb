@@ -4,7 +4,7 @@ class GamesController < ApplicationController
 
   # GET /games or /games.json
   def index
-    @games = Game.all
+    @games = GameRepository.list
   end
 
   # GET /games/1 or /games/1.json
@@ -13,7 +13,7 @@ class GamesController < ApplicationController
 
   # GET /games/new
   def new
-    @game = Game.new
+    @game = Game.new(nil, nil, nil, nil, nil, nil, nil, nil)
   end
 
   # GET /games/1/edit
@@ -22,10 +22,20 @@ class GamesController < ApplicationController
 
   # POST /games or /games.json
   def create
-    @game = Game.new(game_params)
+    @game = GameRepository.add(Game.new(
+        nil,
+        Team.new(game_params[:first_team_id], nil),
+        Team.new(game_params[:second_team_id], nil),
+        game_params[:winning_team],
+        game_params[:first_team_score],
+        game_params[:second_team_score],
+        game_params[:location],
+        game_params[:date]
+      )
+    )
 
     respond_to do |format|
-      if @game.save
+      if @game.persisted?
         format.html { redirect_to game_url(@game), notice: "Game was successfully created." }
         format.json { render :show, status: :created, location: @game }
       else
@@ -38,7 +48,16 @@ class GamesController < ApplicationController
   # PATCH/PUT /games/1 or /games/1.json
   def update
     respond_to do |format|
-      if @game.update(game_params)
+      @game.first_team = TeamRepository.get(game_params[:first_team_id]) if game_params.has_key?("first_team_id")
+      @game.second_team = TeamRepository.get(game_params[:second_team_id]) if game_params.has_key?("second_team_id")
+      @game.winning_team = game_params[:winning_team] if game_params.has_key?("winning_team")
+      @game.first_team_score = game_params[:first_team_score] if game_params.has_key?("first_team_score")
+      @game.second_team_score = game_params[:second_team_score] if game_params.has_key?("second_team_score")
+      @game.location = game_params[:location] if game_params.has_key?("location")
+      @game.date = game_params[:date] if game_params.has_key?("date")
+
+      @game = GameRepository.edit(@game)
+      if @game.errors.empty?
         format.html { redirect_to game_url(@game), notice: "Game was successfully updated." }
         format.json { render :show, status: :ok, location: @game }
       else
@@ -50,7 +69,7 @@ class GamesController < ApplicationController
 
   # DELETE /games/1 or /games/1.json
   def destroy
-    @game.destroy
+    GameRepository.delete(@game)
 
     respond_to do |format|
       format.html { redirect_to games_url, notice: "Game was successfully destroyed." }
@@ -61,11 +80,23 @@ class GamesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_game
-      @game = Game.find(params[:id])
+      @game = GameRepository.get(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def game_params
-      params.require(:game).permit(:date, :location, :first_team_id, :second_team_id, :winning_team, :first_team_score, :second_team_score)
+      params[:game].delete(:id) if params[:game].has_key?(:id)
+      params[:game].delete(:first_team) if params[:game].has_key?(:first_team)
+      params[:game].delete(:second_team) if params[:game].has_key?(:second_team)
+      params.require(:game).permit(
+        :date,
+        :location,
+        :first_team_id,
+        :second_team_id,
+        :winning_team,
+        :first_team_score,
+        :second_team_score
+      )
     end
 end
+

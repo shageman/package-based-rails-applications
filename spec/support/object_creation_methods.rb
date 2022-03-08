@@ -20,7 +20,15 @@ module ObjectCreationMethods
   end
 
   def game_params(overrides = {})
+    game_defaults = {}
+    if overrides.has_key?(:first_team)
+      game_defaults[:first_team_id] = overrides.delete(:first_team)&.id
+    end
+    if overrides.has_key?(:second_team)
+      game_defaults[:second_team_id] = overrides.delete(:second_team)&.id
+    end
     defaults = {
+      id: nil,
       first_team_id: -> { create_team.id },
       second_team_id: -> { create_team.id },
       winning_team: 2,
@@ -28,16 +36,28 @@ module ObjectCreationMethods
       second_team_score: 3,
       location: "Somewhere",
       date: Date.today
-    }
-    defaults.merge(overrides)
+    }.merge(game_defaults)
+    evaluate(defaults.merge(overrides))
   end
 
   def new_game(overrides = {})
-    Game.new { |game| apply(game, game_params(overrides), {}) }
+    a = game_params(overrides)
+    Game.new(
+      a[:id],
+      TeamRepository.get(a[:first_team_id]),
+      TeamRepository.get(a[:second_team_id]),
+      a[:winning_team],
+      a[:first_team_score],
+      a[:second_team_score],
+      a[:location],
+      a[:date]
+    )
   end
 
   def create_game(overrides = {})
-    new_game(overrides).tap(&:save!)
+    game = GameRepository.add(new_game(overrides))
+    Kernel.raise "Game creation failed" unless game.persisted?
+    game
   end
 
   private
@@ -47,12 +67,11 @@ module ObjectCreationMethods
     @counter += 1
   end
 
-  def apply(object, defaults, overrides)
-    options = defaults.merge(overrides)
-    options.each do |method, value_or_proc|
-      object.__send__(
-          "#{method}=",
-          value_or_proc.is_a?(Proc) ? value_or_proc.call : value_or_proc)
+  def evaluate(attributes)
+    attributes.keys.inject({}) do |memo, key|
+      memo[key] = attributes[key]
+      memo[key] = attributes[key].call if attributes[key].is_a?(Proc)
+      memo
     end
   end
 end

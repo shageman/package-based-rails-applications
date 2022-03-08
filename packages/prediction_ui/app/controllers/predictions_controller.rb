@@ -6,7 +6,7 @@ class PredictionsController < ApplicationController
 
   def create
     predictor = Predictor.new
-    predictor.learn(TeamRepository.list, Game.all)
+    predictor.learn(TeamRepository.list, GameRepository.list)
     @prediction = predictor.predict(
         TeamRepository.get(params["first_team"]["id"]),
         TeamRepository.get(params["second_team"]["id"]))

@@ -8,21 +8,21 @@
 # controller code, this generated spec may or may not pass.
 #
 # It only uses APIs available in rails and/or rspec-rails. There are a number
-# of tools you can use to make these specs even more expressive, but we're
+# of tools you can use to make these specs even more expressive, but we"re
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/games", type: :request do
-  let(:team1) { create_team }
-  let(:team2) { create_team }
+  let(:team1) { create_team(name: "Team1") }
+  let(:team2) { create_team(name: "Team2") }
 
   # Game. As you add validations to Game, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    game_params(first_team_id: team1.id, second_team_id: team2.id)
+    game_params(first_team: team1, second_team: team2)
   }
 
   let(:invalid_attributes) {
-    game_params(first_team_id: team1.id, second_team_id: team2.id, date: nil)
+    game_params(first_team: team1, second_team: team2, date: nil)
   }
 
   describe "GET /index" do
@@ -61,12 +61,12 @@ RSpec.describe "/games", type: :request do
       it "creates a new Game" do
         expect {
           post games_url, params: { game: valid_attributes }
-        }.to change(Game, :count).by(1)
+        }.to change(GameRepository, :count).by(1)
       end
 
       it "redirects to the created game" do
         post games_url, params: { game: valid_attributes }
-        expect(response).to redirect_to(game_url(Game.last))
+        expect(response).to redirect_to(game_url(GameRepository.list.last))
       end
     end
 
@@ -74,12 +74,13 @@ RSpec.describe "/games", type: :request do
       it "does not create a new Game" do
         expect {
           post games_url, params: { game: invalid_attributes }
-        }.to change(Game, :count).by(0)
+        }.to change(GameRepository, :count).by(0)
       end
 
-      it "renders a successful response (i.e. to display the 'new' template)" do
+      it "renders a successful response (i.e. to display the new template)" do
         post games_url, params: { game: invalid_attributes }
         expect(response).not_to be_successful
+        expect(response.body).to include("Date can&#39;t be blank")
       end
     end
   end
@@ -87,29 +88,30 @@ RSpec.describe "/games", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        { location: 'test' }
+        { location: "test" }
       }
 
       it "updates the requested game" do
         game = create_game valid_attributes
         patch game_url(game), params: { game: new_attributes }
-        game.reload
-        expect(game.location).to eq('test')
+        game = GameRepository.get(game.id)
+        expect(game.location).to eq("test")
       end
 
       it "redirects to the game" do
         game = create_game valid_attributes
         patch game_url(game), params: { game: new_attributes }
-        game.reload
+        game = GameRepository.get(game.id)
         expect(response).to redirect_to(game_url(game))
       end
     end
 
     context "with invalid parameters" do
-      it "renders a successful response (i.e. to display the 'edit' template)" do
+      it "renders a successful response (i.e. to display the edit template)" do
         game = create_game valid_attributes
         patch game_url(game), params: { game: invalid_attributes }
-        expect(response).not_to be_successful
+        expect(response).to have_http_status(422)
+        expect(response.body).to include("Date can&#39;t be blank")
       end
     end
   end
@@ -119,7 +121,7 @@ RSpec.describe "/games", type: :request do
       game = create_game valid_attributes
       expect {
         delete game_url(game)
-      }.to change(Game, :count).by(-1)
+      }.to change(GameRepository, :count).by(-1)
     end
 
     it "redirects to the games list" do
@@ -129,3 +131,4 @@ RSpec.describe "/games", type: :request do
     end
   end
 end
+
