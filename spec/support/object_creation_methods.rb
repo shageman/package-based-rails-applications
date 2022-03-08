@@ -2,17 +2,21 @@
 module ObjectCreationMethods
   def team_params(overrides = {})
     defaults = {
+      id: nil,
       name: "Some name #{counter}"
     }
     defaults.merge(overrides)
   end
 
   def new_team(overrides = {})
-    Team.new { |team| apply(team, team_params(overrides), overrides) }
+    a = team_params(overrides)
+    Team.new(a[:id], a[:name])
   end
 
   def create_team(overrides = {})
-    new_team(overrides).tap(&:save!)
+    team = TeamRepository.add(new_team(overrides))
+    Kernel.raise "Team creation failed" unless team.persisted?
+    team
   end
 
   def game_params(overrides = {})
@@ -52,3 +56,4 @@ module ObjectCreationMethods
     end
   end
 end
+

@@ -100,40 +100,40 @@ module Game::GeneratedAttributeMethods
 end
 
 module Game::GeneratedAssociationMethods
-  sig { returns(::Team) }
+  sig { returns(::TeamRecord) }
   def first_team; end
 
-  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::Team).void)).returns(::Team) }
+  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::TeamRecord).void)).returns(::TeamRecord) }
   def build_first_team(*args, &block); end
 
-  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::Team).void)).returns(::Team) }
+  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::TeamRecord).void)).returns(::TeamRecord) }
   def create_first_team(*args, &block); end
 
-  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::Team).void)).returns(::Team) }
+  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::TeamRecord).void)).returns(::TeamRecord) }
   def create_first_team!(*args, &block); end
 
-  sig { params(value: ::Team).void }
+  sig { params(value: ::TeamRecord).void }
   def first_team=(value); end
 
-  sig { returns(::Team) }
+  sig { returns(::TeamRecord) }
   def reload_first_team; end
 
-  sig { returns(::Team) }
+  sig { returns(::TeamRecord) }
   def second_team; end
 
-  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::Team).void)).returns(::Team) }
+  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::TeamRecord).void)).returns(::TeamRecord) }
   def build_second_team(*args, &block); end
 
-  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::Team).void)).returns(::Team) }
+  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::TeamRecord).void)).returns(::TeamRecord) }
   def create_second_team(*args, &block); end
 
-  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::Team).void)).returns(::Team) }
+  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::TeamRecord).void)).returns(::TeamRecord) }
   def create_second_team!(*args, &block); end
 
-  sig { params(value: ::Team).void }
+  sig { params(value: ::TeamRecord).void }
   def second_team=(value); end
 
-  sig { returns(::Team) }
+  sig { returns(::TeamRecord) }
   def reload_second_team; end
 end
 

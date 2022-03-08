@@ -5,6 +5,7 @@
 # typed: strict
 
 module ::RSpec; end
+module ::TeamsController; end
 module ActionController::ActionControllerError; end
 module ActionController::MimeResponds::Collector; end
 module ActionDispatch::Flash::FlashHash; end

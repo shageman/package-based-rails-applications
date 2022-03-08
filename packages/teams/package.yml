@@ -1,6 +1,5 @@
-
 enforce_dependencies: true
-enforce_privacy: false
+enforce_privacy: true
 dependencies:
 - packages/predictor_interface
 - packages/rails_shims

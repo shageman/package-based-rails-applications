@@ -1,14 +1,15 @@
+# typed: ignore
 class PredictionsController < ApplicationController
   def new
-    @teams = Team.all
+    @teams = TeamRepository.list
   end
 
   def create
     predictor = Predictor.new
-    predictor.learn(Team.all, Game.all)
+    predictor.learn(TeamRepository.list, Game.all)
     @prediction = predictor.predict(
-        Team.find(params["first_team"]["id"]),
-        Team.find(params["second_team"]["id"]))
+        TeamRepository.get(params["first_team"]["id"]),
+        TeamRepository.get(params["second_team"]["id"]))
   end
 end
 

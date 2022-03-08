@@ -1,5 +1,7 @@
 # typed: false
-class Team < ApplicationRecord
+class TeamRecord < ApplicationRecord
+  self.table_name = "teams"
+
   include Contender
   extend T::Sig
 

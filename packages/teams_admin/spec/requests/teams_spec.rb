@@ -61,12 +61,12 @@ RSpec.describe "/teams", type: :request do
       it "creates a new Team" do
         expect {
           post teams_url, params: { team: valid_attributes }
-        }.to change(Team, :count).by(1)
+        }.to change(TeamRepository, :count).by(1)
       end
 
       it "redirects to the created team" do
         post teams_url, params: { team: valid_attributes }
-        expect(response).to redirect_to(team_url(Team.all.last))
+        expect(response).to redirect_to(team_url(TeamRecord.all.last))
       end
     end
 
@@ -74,12 +74,13 @@ RSpec.describe "/teams", type: :request do
       it "does not create a new Team" do
         expect {
           post teams_url, params: { team: invalid_attributes }
-        }.to change(Team, :count).by(0)
+        }.to change(TeamRepository, :count).by(0)
       end
 
       it "renders a successful response (i.e. to display the new template)" do
         post teams_url, params: { team: invalid_attributes }
         expect(response).not_to be_successful
+        expect(response.body).to include("Name can&#39;t be blank")
       end
     end
   end
@@ -93,14 +94,14 @@ RSpec.describe "/teams", type: :request do
       it "updates the requested team" do
         team = create_team valid_attributes
         patch team_url(team), params: { team: new_attributes }
-        team.reload
+        team = TeamRepository.get(team.id)
         expect(team.name).to eq("test")
       end
 
       it "redirects to the team" do
         team = create_team valid_attributes
         patch team_url(team), params: { team: new_attributes }
-        team.reload
+        team = TeamRepository.get(team.id)
         expect(response).to redirect_to(team_url(team))
       end
     end
@@ -109,7 +110,8 @@ RSpec.describe "/teams", type: :request do
       it "renders a successful response (i.e. to display the edit template)" do
         team = create_team valid_attributes
         patch team_url(team), params: { team: invalid_attributes }
-        expect(response).not_to be_successful
+        expect(response).to have_http_status(422)
+        expect(response.body).to include("Name can&#39;t be blank")
       end
     end
   end
@@ -119,7 +121,7 @@ RSpec.describe "/teams", type: :request do
       team = create_team valid_attributes
       expect {
         delete team_url(team)
-      }.to change(Team, :count).by(-1)
+      }.to change(TeamRepository, :count).by(-1)
     end
 
     it "redirects to the teams list" do
@@ -129,3 +131,4 @@ RSpec.describe "/teams", type: :request do
     end
   end
 end
+

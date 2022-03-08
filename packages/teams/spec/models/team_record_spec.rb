@@ -1,4 +1,5 @@
 # typed: false
-RSpec.describe Team do
+RSpec.describe TeamRecord do
   it { should validate_presence_of :name }
 end
+
