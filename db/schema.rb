@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_09_121418) do
+ActiveRecord::Schema.define(version: 2022_03_11_015107) do
 
   create_table "games", force: :cascade do |t|
     t.datetime "date", precision: 6
