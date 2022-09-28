@@ -1,4 +1,4 @@
-# typed: ignore
+# typed: true
 module TypedParams
   extend T::Generic
 
