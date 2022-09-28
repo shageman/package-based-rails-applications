@@ -38,7 +38,7 @@ class ActionText::EncryptedRichText::ActiveRecord_Relation < ActiveRecord::Relat
   include ActionText::EncryptedRichText::ActiveRelation_WhereNot
   include ActionText::EncryptedRichText::CustomFinderMethods
   include ActionText::EncryptedRichText::QueryMethodsReturningRelation
-  Elem = type_member(fixed: ActionText::EncryptedRichText)
+  Elem = type_member {{fixed: ActionText::EncryptedRichText}}
 
   sig { params(args: T.untyped).returns(ActionText::EncryptedRichText::ActiveRecord_Relation) }
   def with_attached_embeds(*args); end
@@ -48,7 +48,7 @@ class ActionText::EncryptedRichText::ActiveRecord_AssociationRelation < ActiveRe
   include ActionText::EncryptedRichText::ActiveRelation_WhereNot
   include ActionText::EncryptedRichText::CustomFinderMethods
   include ActionText::EncryptedRichText::QueryMethodsReturningAssociationRelation
-  Elem = type_member(fixed: ActionText::EncryptedRichText)
+  Elem = type_member {{fixed: ActionText::EncryptedRichText}}
 
   sig { params(args: T.untyped).returns(ActionText::EncryptedRichText::ActiveRecord_AssociationRelation) }
   def with_attached_embeds(*args); end
@@ -57,7 +57,7 @@ end
 class ActionText::EncryptedRichText::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
   include ActionText::EncryptedRichText::CustomFinderMethods
   include ActionText::EncryptedRichText::QueryMethodsReturningAssociationRelation
-  Elem = type_member(fixed: ActionText::EncryptedRichText)
+  Elem = type_member {{fixed: ActionText::EncryptedRichText}}
 
   sig { params(args: T.untyped).returns(ActionText::EncryptedRichText::ActiveRecord_AssociationRelation) }
   def with_attached_embeds(*args); end
@@ -175,6 +175,12 @@ module ActionText::EncryptedRichText::QueryMethodsReturningRelation
   sig { params(args: T.any(String, Symbol, T::Array[T.any(String, Symbol)])).returns(ActionText::EncryptedRichText::ActiveRecord_Relation) }
   def select_columns(*args); end
 
+  sig { params(args: Symbol).returns(ActionText::EncryptedRichText::ActiveRecord_Relation) }
+  def where_missing(*args); end
+
+  sig { params(column: Symbol, values: T::Array[T.untyped]).returns(ActionText::EncryptedRichText::ActiveRecord_Relation) }
+  def in_order_of(column, values); end
+
   sig { params(args: T.untyped, block: T.nilable(T.proc.void)).returns(ActionText::EncryptedRichText::ActiveRecord_Relation) }
   def extending(*args, &block); end
 
@@ -290,6 +296,12 @@ module ActionText::EncryptedRichText::QueryMethodsReturningAssociationRelation
 
   sig { params(args: T.any(String, Symbol, T::Array[T.any(String, Symbol)])).returns(ActionText::EncryptedRichText::ActiveRecord_AssociationRelation) }
   def select_columns(*args); end
+
+  sig { params(args: Symbol).returns(ActionText::EncryptedRichText::ActiveRecord_AssociationRelation) }
+  def where_missing(*args); end
+
+  sig { params(column: Symbol, values: T::Array[T.untyped]).returns(ActionText::EncryptedRichText::ActiveRecord_AssociationRelation) }
+  def in_order_of(column, values); end
 
   sig { params(args: T.untyped, block: T.nilable(T.proc.void)).returns(ActionText::EncryptedRichText::ActiveRecord_AssociationRelation) }
   def extending(*args, &block); end

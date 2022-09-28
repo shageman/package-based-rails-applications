@@ -41,7 +41,7 @@ class ActiveStorage::Blob::ActiveRecord_Relation < ActiveRecord::Relation
   include ActiveStorage::Blob::ActiveRelation_WhereNot
   include ActiveStorage::Blob::CustomFinderMethods
   include ActiveStorage::Blob::QueryMethodsReturningRelation
-  Elem = type_member(fixed: ActiveStorage::Blob)
+  Elem = type_member {{fixed: ActiveStorage::Blob}}
 
   sig { params(args: T.untyped).returns(ActiveStorage::Blob::ActiveRecord_Relation) }
   def unattached(*args); end
@@ -54,7 +54,7 @@ class ActiveStorage::Blob::ActiveRecord_AssociationRelation < ActiveRecord::Asso
   include ActiveStorage::Blob::ActiveRelation_WhereNot
   include ActiveStorage::Blob::CustomFinderMethods
   include ActiveStorage::Blob::QueryMethodsReturningAssociationRelation
-  Elem = type_member(fixed: ActiveStorage::Blob)
+  Elem = type_member {{fixed: ActiveStorage::Blob}}
 
   sig { params(args: T.untyped).returns(ActiveStorage::Blob::ActiveRecord_AssociationRelation) }
   def unattached(*args); end
@@ -66,7 +66,7 @@ end
 class ActiveStorage::Blob::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
   include ActiveStorage::Blob::CustomFinderMethods
   include ActiveStorage::Blob::QueryMethodsReturningAssociationRelation
-  Elem = type_member(fixed: ActiveStorage::Blob)
+  Elem = type_member {{fixed: ActiveStorage::Blob}}
 
   sig { params(args: T.untyped).returns(ActiveStorage::Blob::ActiveRecord_AssociationRelation) }
   def unattached(*args); end
@@ -187,6 +187,12 @@ module ActiveStorage::Blob::QueryMethodsReturningRelation
   sig { params(args: T.any(String, Symbol, T::Array[T.any(String, Symbol)])).returns(ActiveStorage::Blob::ActiveRecord_Relation) }
   def select_columns(*args); end
 
+  sig { params(args: Symbol).returns(ActiveStorage::Blob::ActiveRecord_Relation) }
+  def where_missing(*args); end
+
+  sig { params(column: Symbol, values: T::Array[T.untyped]).returns(ActiveStorage::Blob::ActiveRecord_Relation) }
+  def in_order_of(column, values); end
+
   sig { params(args: T.untyped, block: T.nilable(T.proc.void)).returns(ActiveStorage::Blob::ActiveRecord_Relation) }
   def extending(*args, &block); end
 
@@ -302,6 +308,12 @@ module ActiveStorage::Blob::QueryMethodsReturningAssociationRelation
 
   sig { params(args: T.any(String, Symbol, T::Array[T.any(String, Symbol)])).returns(ActiveStorage::Blob::ActiveRecord_AssociationRelation) }
   def select_columns(*args); end
+
+  sig { params(args: Symbol).returns(ActiveStorage::Blob::ActiveRecord_AssociationRelation) }
+  def where_missing(*args); end
+
+  sig { params(column: Symbol, values: T::Array[T.untyped]).returns(ActiveStorage::Blob::ActiveRecord_AssociationRelation) }
+  def in_order_of(column, values); end
 
   sig { params(args: T.untyped, block: T.nilable(T.proc.void)).returns(ActiveStorage::Blob::ActiveRecord_AssociationRelation) }
   def extending(*args, &block); end
