@@ -130,6 +130,12 @@ module ActionMailbox::Record::QueryMethodsReturningRelation
   sig { params(args: T.any(String, Symbol, T::Array[T.any(String, Symbol)])).returns(ActionMailbox::Record::ActiveRecord_Relation) }
   def select_columns(*args); end
 
+  sig { params(args: Symbol).returns(ActionMailbox::Record::ActiveRecord_Relation) }
+  def where_missing(*args); end
+
+  sig { params(column: Symbol, values: T::Array[T.untyped]).returns(ActionMailbox::Record::ActiveRecord_Relation) }
+  def in_order_of(column, values); end
+
   sig { params(args: T.untyped, block: T.nilable(T.proc.void)).returns(ActionMailbox::Record::ActiveRecord_Relation) }
   def extending(*args, &block); end
 
@@ -246,6 +252,12 @@ module ActionMailbox::Record::QueryMethodsReturningAssociationRelation
   sig { params(args: T.any(String, Symbol, T::Array[T.any(String, Symbol)])).returns(ActionMailbox::Record::ActiveRecord_AssociationRelation) }
   def select_columns(*args); end
 
+  sig { params(args: Symbol).returns(ActionMailbox::Record::ActiveRecord_AssociationRelation) }
+  def where_missing(*args); end
+
+  sig { params(column: Symbol, values: T::Array[T.untyped]).returns(ActionMailbox::Record::ActiveRecord_AssociationRelation) }
+  def in_order_of(column, values); end
+
   sig { params(args: T.untyped, block: T.nilable(T.proc.void)).returns(ActionMailbox::Record::ActiveRecord_AssociationRelation) }
   def extending(*args, &block); end
 
@@ -266,20 +278,20 @@ class ActionMailbox::Record::ActiveRecord_Relation < ActiveRecord::Relation
   include ActionMailbox::Record::ActiveRelation_WhereNot
   include ActionMailbox::Record::CustomFinderMethods
   include ActionMailbox::Record::QueryMethodsReturningRelation
-  Elem = type_member(fixed: ActionMailbox::Record)
+  Elem = type_member {{fixed: ActionMailbox::Record}}
 end
 
 class ActionMailbox::Record::ActiveRecord_AssociationRelation < ActiveRecord::AssociationRelation
   include ActionMailbox::Record::ActiveRelation_WhereNot
   include ActionMailbox::Record::CustomFinderMethods
   include ActionMailbox::Record::QueryMethodsReturningAssociationRelation
-  Elem = type_member(fixed: ActionMailbox::Record)
+  Elem = type_member {{fixed: ActionMailbox::Record}}
 end
 
 class ActionMailbox::Record::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
   include ActionMailbox::Record::CustomFinderMethods
   include ActionMailbox::Record::QueryMethodsReturningAssociationRelation
-  Elem = type_member(fixed: ActionMailbox::Record)
+  Elem = type_member {{fixed: ActionMailbox::Record}}
 
   sig { params(records: T.any(ActionMailbox::Record, T::Array[ActionMailbox::Record])).returns(T.self_type) }
   def <<(*records); end

@@ -169,6 +169,12 @@ module TeamRecord::QueryMethodsReturningRelation
   sig { params(args: T.any(String, Symbol, T::Array[T.any(String, Symbol)])).returns(TeamRecord::ActiveRecord_Relation) }
   def select_columns(*args); end
 
+  sig { params(args: Symbol).returns(TeamRecord::ActiveRecord_Relation) }
+  def where_missing(*args); end
+
+  sig { params(column: Symbol, values: T::Array[T.untyped]).returns(TeamRecord::ActiveRecord_Relation) }
+  def in_order_of(column, values); end
+
   sig { params(args: T.untyped, block: T.nilable(T.proc.void)).returns(TeamRecord::ActiveRecord_Relation) }
   def extending(*args, &block); end
 
@@ -285,6 +291,12 @@ module TeamRecord::QueryMethodsReturningAssociationRelation
   sig { params(args: T.any(String, Symbol, T::Array[T.any(String, Symbol)])).returns(TeamRecord::ActiveRecord_AssociationRelation) }
   def select_columns(*args); end
 
+  sig { params(args: Symbol).returns(TeamRecord::ActiveRecord_AssociationRelation) }
+  def where_missing(*args); end
+
+  sig { params(column: Symbol, values: T::Array[T.untyped]).returns(TeamRecord::ActiveRecord_AssociationRelation) }
+  def in_order_of(column, values); end
+
   sig { params(args: T.untyped, block: T.nilable(T.proc.void)).returns(TeamRecord::ActiveRecord_AssociationRelation) }
   def extending(*args, &block); end
 
@@ -305,20 +317,20 @@ class TeamRecord::ActiveRecord_Relation < ActiveRecord::Relation
   include TeamRecord::ActiveRelation_WhereNot
   include TeamRecord::CustomFinderMethods
   include TeamRecord::QueryMethodsReturningRelation
-  Elem = type_member(fixed: TeamRecord)
+  Elem = type_member {{fixed: TeamRecord}}
 end
 
 class TeamRecord::ActiveRecord_AssociationRelation < ActiveRecord::AssociationRelation
   include TeamRecord::ActiveRelation_WhereNot
   include TeamRecord::CustomFinderMethods
   include TeamRecord::QueryMethodsReturningAssociationRelation
-  Elem = type_member(fixed: TeamRecord)
+  Elem = type_member {{fixed: TeamRecord}}
 end
 
 class TeamRecord::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
   include TeamRecord::CustomFinderMethods
   include TeamRecord::QueryMethodsReturningAssociationRelation
-  Elem = type_member(fixed: TeamRecord)
+  Elem = type_member {{fixed: TeamRecord}}
 
   sig { params(records: T.any(TeamRecord, T::Array[TeamRecord])).returns(T.self_type) }
   def <<(*records); end
