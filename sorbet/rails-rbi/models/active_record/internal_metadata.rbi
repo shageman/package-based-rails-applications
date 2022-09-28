@@ -169,6 +169,12 @@ module ActiveRecord::InternalMetadata::QueryMethodsReturningRelation
   sig { params(args: T.any(String, Symbol, T::Array[T.any(String, Symbol)])).returns(ActiveRecord::InternalMetadata::ActiveRecord_Relation) }
   def select_columns(*args); end
 
+  sig { params(args: Symbol).returns(ActiveRecord::InternalMetadata::ActiveRecord_Relation) }
+  def where_missing(*args); end
+
+  sig { params(column: Symbol, values: T::Array[T.untyped]).returns(ActiveRecord::InternalMetadata::ActiveRecord_Relation) }
+  def in_order_of(column, values); end
+
   sig { params(args: T.untyped, block: T.nilable(T.proc.void)).returns(ActiveRecord::InternalMetadata::ActiveRecord_Relation) }
   def extending(*args, &block); end
 
@@ -285,6 +291,12 @@ module ActiveRecord::InternalMetadata::QueryMethodsReturningAssociationRelation
   sig { params(args: T.any(String, Symbol, T::Array[T.any(String, Symbol)])).returns(ActiveRecord::InternalMetadata::ActiveRecord_AssociationRelation) }
   def select_columns(*args); end
 
+  sig { params(args: Symbol).returns(ActiveRecord::InternalMetadata::ActiveRecord_AssociationRelation) }
+  def where_missing(*args); end
+
+  sig { params(column: Symbol, values: T::Array[T.untyped]).returns(ActiveRecord::InternalMetadata::ActiveRecord_AssociationRelation) }
+  def in_order_of(column, values); end
+
   sig { params(args: T.untyped, block: T.nilable(T.proc.void)).returns(ActiveRecord::InternalMetadata::ActiveRecord_AssociationRelation) }
   def extending(*args, &block); end
 
@@ -305,20 +317,20 @@ class ActiveRecord::InternalMetadata::ActiveRecord_Relation < ActiveRecord::Rela
   include ActiveRecord::InternalMetadata::ActiveRelation_WhereNot
   include ActiveRecord::InternalMetadata::CustomFinderMethods
   include ActiveRecord::InternalMetadata::QueryMethodsReturningRelation
-  Elem = type_member(fixed: ActiveRecord::InternalMetadata)
+  Elem = type_member {{fixed: ActiveRecord::InternalMetadata}}
 end
 
 class ActiveRecord::InternalMetadata::ActiveRecord_AssociationRelation < ActiveRecord::AssociationRelation
   include ActiveRecord::InternalMetadata::ActiveRelation_WhereNot
   include ActiveRecord::InternalMetadata::CustomFinderMethods
   include ActiveRecord::InternalMetadata::QueryMethodsReturningAssociationRelation
-  Elem = type_member(fixed: ActiveRecord::InternalMetadata)
+  Elem = type_member {{fixed: ActiveRecord::InternalMetadata}}
 end
 
 class ActiveRecord::InternalMetadata::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
   include ActiveRecord::InternalMetadata::CustomFinderMethods
   include ActiveRecord::InternalMetadata::QueryMethodsReturningAssociationRelation
-  Elem = type_member(fixed: ActiveRecord::InternalMetadata)
+  Elem = type_member {{fixed: ActiveRecord::InternalMetadata}}
 
   sig { params(records: T.any(ActiveRecord::InternalMetadata, T::Array[ActiveRecord::InternalMetadata])).returns(T.self_type) }
   def <<(*records); end
