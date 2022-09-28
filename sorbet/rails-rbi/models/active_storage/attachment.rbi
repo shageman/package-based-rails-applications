@@ -76,7 +76,7 @@ class ActiveStorage::Attachment::ActiveRecord_Relation < ActiveRecord::Relation
   include ActiveStorage::Attachment::ActiveRelation_WhereNot
   include ActiveStorage::Attachment::CustomFinderMethods
   include ActiveStorage::Attachment::QueryMethodsReturningRelation
-  Elem = type_member(fixed: ActiveStorage::Attachment)
+  Elem = type_member {{fixed: ActiveStorage::Attachment}}
 
   sig { params(args: T.untyped).returns(ActiveStorage::Attachment::ActiveRecord_Relation) }
   def with_all_variant_records(*args); end
@@ -86,7 +86,7 @@ class ActiveStorage::Attachment::ActiveRecord_AssociationRelation < ActiveRecord
   include ActiveStorage::Attachment::ActiveRelation_WhereNot
   include ActiveStorage::Attachment::CustomFinderMethods
   include ActiveStorage::Attachment::QueryMethodsReturningAssociationRelation
-  Elem = type_member(fixed: ActiveStorage::Attachment)
+  Elem = type_member {{fixed: ActiveStorage::Attachment}}
 
   sig { params(args: T.untyped).returns(ActiveStorage::Attachment::ActiveRecord_AssociationRelation) }
   def with_all_variant_records(*args); end
@@ -95,7 +95,7 @@ end
 class ActiveStorage::Attachment::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
   include ActiveStorage::Attachment::CustomFinderMethods
   include ActiveStorage::Attachment::QueryMethodsReturningAssociationRelation
-  Elem = type_member(fixed: ActiveStorage::Attachment)
+  Elem = type_member {{fixed: ActiveStorage::Attachment}}
 
   sig { params(args: T.untyped).returns(ActiveStorage::Attachment::ActiveRecord_AssociationRelation) }
   def with_all_variant_records(*args); end
@@ -213,6 +213,12 @@ module ActiveStorage::Attachment::QueryMethodsReturningRelation
   sig { params(args: T.any(String, Symbol, T::Array[T.any(String, Symbol)])).returns(ActiveStorage::Attachment::ActiveRecord_Relation) }
   def select_columns(*args); end
 
+  sig { params(args: Symbol).returns(ActiveStorage::Attachment::ActiveRecord_Relation) }
+  def where_missing(*args); end
+
+  sig { params(column: Symbol, values: T::Array[T.untyped]).returns(ActiveStorage::Attachment::ActiveRecord_Relation) }
+  def in_order_of(column, values); end
+
   sig { params(args: T.untyped, block: T.nilable(T.proc.void)).returns(ActiveStorage::Attachment::ActiveRecord_Relation) }
   def extending(*args, &block); end
 
@@ -328,6 +334,12 @@ module ActiveStorage::Attachment::QueryMethodsReturningAssociationRelation
 
   sig { params(args: T.any(String, Symbol, T::Array[T.any(String, Symbol)])).returns(ActiveStorage::Attachment::ActiveRecord_AssociationRelation) }
   def select_columns(*args); end
+
+  sig { params(args: Symbol).returns(ActiveStorage::Attachment::ActiveRecord_AssociationRelation) }
+  def where_missing(*args); end
+
+  sig { params(column: Symbol, values: T::Array[T.untyped]).returns(ActiveStorage::Attachment::ActiveRecord_AssociationRelation) }
+  def in_order_of(column, values); end
 
   sig { params(args: T.untyped, block: T.nilable(T.proc.void)).returns(ActiveStorage::Attachment::ActiveRecord_AssociationRelation) }
   def extending(*args, &block); end

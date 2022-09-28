@@ -262,6 +262,12 @@ module Game::QueryMethodsReturningRelation
   sig { params(args: T.any(String, Symbol, T::Array[T.any(String, Symbol)])).returns(Game::ActiveRecord_Relation) }
   def select_columns(*args); end
 
+  sig { params(args: Symbol).returns(Game::ActiveRecord_Relation) }
+  def where_missing(*args); end
+
+  sig { params(column: Symbol, values: T::Array[T.untyped]).returns(Game::ActiveRecord_Relation) }
+  def in_order_of(column, values); end
+
   sig { params(args: T.untyped, block: T.nilable(T.proc.void)).returns(Game::ActiveRecord_Relation) }
   def extending(*args, &block); end
 
@@ -378,6 +384,12 @@ module Game::QueryMethodsReturningAssociationRelation
   sig { params(args: T.any(String, Symbol, T::Array[T.any(String, Symbol)])).returns(Game::ActiveRecord_AssociationRelation) }
   def select_columns(*args); end
 
+  sig { params(args: Symbol).returns(Game::ActiveRecord_AssociationRelation) }
+  def where_missing(*args); end
+
+  sig { params(column: Symbol, values: T::Array[T.untyped]).returns(Game::ActiveRecord_AssociationRelation) }
+  def in_order_of(column, values); end
+
   sig { params(args: T.untyped, block: T.nilable(T.proc.void)).returns(Game::ActiveRecord_AssociationRelation) }
   def extending(*args, &block); end
 
@@ -398,20 +410,20 @@ class Game::ActiveRecord_Relation < ActiveRecord::Relation
   include Game::ActiveRelation_WhereNot
   include Game::CustomFinderMethods
   include Game::QueryMethodsReturningRelation
-  Elem = type_member(fixed: Game)
+  Elem = type_member {{fixed: Game}}
 end
 
 class Game::ActiveRecord_AssociationRelation < ActiveRecord::AssociationRelation
   include Game::ActiveRelation_WhereNot
   include Game::CustomFinderMethods
   include Game::QueryMethodsReturningAssociationRelation
-  Elem = type_member(fixed: Game)
+  Elem = type_member {{fixed: Game}}
 end
 
 class Game::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
   include Game::CustomFinderMethods
   include Game::QueryMethodsReturningAssociationRelation
-  Elem = type_member(fixed: Game)
+  Elem = type_member {{fixed: Game}}
 
   sig { params(records: T.any(Game, T::Array[Game])).returns(T.self_type) }
   def <<(*records); end

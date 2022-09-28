@@ -5,7 +5,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/edit/master/lib/railties/all/railties.rbi
 #
-# typed: ignore
+# typed: strong
 
 module Rails
   class << self
@@ -21,7 +21,7 @@ module Rails
     sig { returns(ActiveSupport::StringInquirer) }
     def env; end
 
-    sig { returns(Logger) }
+    sig { returns(ActiveSupport::Logger) }
     def logger; end
 
     sig { returns(Pathname) }
@@ -40,9 +40,9 @@ end
 Rails::Application::INITIAL_VARIABLES = T.let(T.unsafe(nil), T::Array[T.untyped])
 
 class Rails::Application::NonSymbolAccessDeprecatedHash < ::ActiveSupport::HashWithIndifferentAccess
-  K = type_member(fixed: T.untyped)
-  V = type_member(fixed: T.untyped)
-  Elem = type_member(fixed: T.untyped)
+  K = type_member {{fixed: T.untyped}}
+  V = type_member {{fixed: T.untyped}}
+  Elem = type_member {{fixed: T.untyped}}
 end
 
 module Rails::Command::Behavior
