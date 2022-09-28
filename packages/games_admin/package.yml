@@ -4,5 +4,4 @@ enforce_privacy: true
 dependencies:
 - packages/rails_shims
 - packages/games
-- packages/teams
 

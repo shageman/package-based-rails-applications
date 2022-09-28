@@ -130,6 +130,12 @@ module ActiveStorage::Record::QueryMethodsReturningRelation
   sig { params(args: T.any(String, Symbol, T::Array[T.any(String, Symbol)])).returns(ActiveStorage::Record::ActiveRecord_Relation) }
   def select_columns(*args); end
 
+  sig { params(args: Symbol).returns(ActiveStorage::Record::ActiveRecord_Relation) }
+  def where_missing(*args); end
+
+  sig { params(column: Symbol, values: T::Array[T.untyped]).returns(ActiveStorage::Record::ActiveRecord_Relation) }
+  def in_order_of(column, values); end
+
   sig { params(args: T.untyped, block: T.nilable(T.proc.void)).returns(ActiveStorage::Record::ActiveRecord_Relation) }
   def extending(*args, &block); end
 
@@ -246,6 +252,12 @@ module ActiveStorage::Record::QueryMethodsReturningAssociationRelation
   sig { params(args: T.any(String, Symbol, T::Array[T.any(String, Symbol)])).returns(ActiveStorage::Record::ActiveRecord_AssociationRelation) }
   def select_columns(*args); end
 
+  sig { params(args: Symbol).returns(ActiveStorage::Record::ActiveRecord_AssociationRelation) }
+  def where_missing(*args); end
+
+  sig { params(column: Symbol, values: T::Array[T.untyped]).returns(ActiveStorage::Record::ActiveRecord_AssociationRelation) }
+  def in_order_of(column, values); end
+
   sig { params(args: T.untyped, block: T.nilable(T.proc.void)).returns(ActiveStorage::Record::ActiveRecord_AssociationRelation) }
   def extending(*args, &block); end
 
@@ -266,20 +278,20 @@ class ActiveStorage::Record::ActiveRecord_Relation < ActiveRecord::Relation
   include ActiveStorage::Record::ActiveRelation_WhereNot
   include ActiveStorage::Record::CustomFinderMethods
   include ActiveStorage::Record::QueryMethodsReturningRelation
-  Elem = type_member(fixed: ActiveStorage::Record)
+  Elem = type_member {{fixed: ActiveStorage::Record}}
 end
 
 class ActiveStorage::Record::ActiveRecord_AssociationRelation < ActiveRecord::AssociationRelation
   include ActiveStorage::Record::ActiveRelation_WhereNot
   include ActiveStorage::Record::CustomFinderMethods
   include ActiveStorage::Record::QueryMethodsReturningAssociationRelation
-  Elem = type_member(fixed: ActiveStorage::Record)
+  Elem = type_member {{fixed: ActiveStorage::Record}}
 end
 
 class ActiveStorage::Record::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
   include ActiveStorage::Record::CustomFinderMethods
   include ActiveStorage::Record::QueryMethodsReturningAssociationRelation
-  Elem = type_member(fixed: ActiveStorage::Record)
+  Elem = type_member {{fixed: ActiveStorage::Record}}
 
   sig { params(records: T.any(ActiveStorage::Record, T::Array[ActiveStorage::Record])).returns(T.self_type) }
   def <<(*records); end

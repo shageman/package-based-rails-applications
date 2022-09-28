@@ -223,6 +223,12 @@ module GameRecord::QueryMethodsReturningRelation
   sig { params(args: T.any(String, Symbol, T::Array[T.any(String, Symbol)])).returns(GameRecord::ActiveRecord_Relation) }
   def select_columns(*args); end
 
+  sig { params(args: Symbol).returns(GameRecord::ActiveRecord_Relation) }
+  def where_missing(*args); end
+
+  sig { params(column: Symbol, values: T::Array[T.untyped]).returns(GameRecord::ActiveRecord_Relation) }
+  def in_order_of(column, values); end
+
   sig { params(args: T.untyped, block: T.nilable(T.proc.void)).returns(GameRecord::ActiveRecord_Relation) }
   def extending(*args, &block); end
 
@@ -339,6 +345,12 @@ module GameRecord::QueryMethodsReturningAssociationRelation
   sig { params(args: T.any(String, Symbol, T::Array[T.any(String, Symbol)])).returns(GameRecord::ActiveRecord_AssociationRelation) }
   def select_columns(*args); end
 
+  sig { params(args: Symbol).returns(GameRecord::ActiveRecord_AssociationRelation) }
+  def where_missing(*args); end
+
+  sig { params(column: Symbol, values: T::Array[T.untyped]).returns(GameRecord::ActiveRecord_AssociationRelation) }
+  def in_order_of(column, values); end
+
   sig { params(args: T.untyped, block: T.nilable(T.proc.void)).returns(GameRecord::ActiveRecord_AssociationRelation) }
   def extending(*args, &block); end
 
@@ -359,20 +371,20 @@ class GameRecord::ActiveRecord_Relation < ActiveRecord::Relation
   include GameRecord::ActiveRelation_WhereNot
   include GameRecord::CustomFinderMethods
   include GameRecord::QueryMethodsReturningRelation
-  Elem = type_member(fixed: GameRecord)
+  Elem = type_member {{fixed: GameRecord}}
 end
 
 class GameRecord::ActiveRecord_AssociationRelation < ActiveRecord::AssociationRelation
   include GameRecord::ActiveRelation_WhereNot
   include GameRecord::CustomFinderMethods
   include GameRecord::QueryMethodsReturningAssociationRelation
-  Elem = type_member(fixed: GameRecord)
+  Elem = type_member {{fixed: GameRecord}}
 end
 
 class GameRecord::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
   include GameRecord::CustomFinderMethods
   include GameRecord::QueryMethodsReturningAssociationRelation
-  Elem = type_member(fixed: GameRecord)
+  Elem = type_member {{fixed: GameRecord}}
 
   sig { params(records: T.any(GameRecord, T::Array[GameRecord])).returns(T.self_type) }
   def <<(*records); end

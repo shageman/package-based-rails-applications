@@ -130,6 +130,12 @@ module ActionText::Record::QueryMethodsReturningRelation
   sig { params(args: T.any(String, Symbol, T::Array[T.any(String, Symbol)])).returns(ActionText::Record::ActiveRecord_Relation) }
   def select_columns(*args); end
 
+  sig { params(args: Symbol).returns(ActionText::Record::ActiveRecord_Relation) }
+  def where_missing(*args); end
+
+  sig { params(column: Symbol, values: T::Array[T.untyped]).returns(ActionText::Record::ActiveRecord_Relation) }
+  def in_order_of(column, values); end
+
   sig { params(args: T.untyped, block: T.nilable(T.proc.void)).returns(ActionText::Record::ActiveRecord_Relation) }
   def extending(*args, &block); end
 
@@ -246,6 +252,12 @@ module ActionText::Record::QueryMethodsReturningAssociationRelation
   sig { params(args: T.any(String, Symbol, T::Array[T.any(String, Symbol)])).returns(ActionText::Record::ActiveRecord_AssociationRelation) }
   def select_columns(*args); end
 
+  sig { params(args: Symbol).returns(ActionText::Record::ActiveRecord_AssociationRelation) }
+  def where_missing(*args); end
+
+  sig { params(column: Symbol, values: T::Array[T.untyped]).returns(ActionText::Record::ActiveRecord_AssociationRelation) }
+  def in_order_of(column, values); end
+
   sig { params(args: T.untyped, block: T.nilable(T.proc.void)).returns(ActionText::Record::ActiveRecord_AssociationRelation) }
   def extending(*args, &block); end
 
@@ -266,20 +278,20 @@ class ActionText::Record::ActiveRecord_Relation < ActiveRecord::Relation
   include ActionText::Record::ActiveRelation_WhereNot
   include ActionText::Record::CustomFinderMethods
   include ActionText::Record::QueryMethodsReturningRelation
-  Elem = type_member(fixed: ActionText::Record)
+  Elem = type_member {{fixed: ActionText::Record}}
 end
 
 class ActionText::Record::ActiveRecord_AssociationRelation < ActiveRecord::AssociationRelation
   include ActionText::Record::ActiveRelation_WhereNot
   include ActionText::Record::CustomFinderMethods
   include ActionText::Record::QueryMethodsReturningAssociationRelation
-  Elem = type_member(fixed: ActionText::Record)
+  Elem = type_member {{fixed: ActionText::Record}}
 end
 
 class ActionText::Record::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
   include ActionText::Record::CustomFinderMethods
   include ActionText::Record::QueryMethodsReturningAssociationRelation
-  Elem = type_member(fixed: ActionText::Record)
+  Elem = type_member {{fixed: ActionText::Record}}
 
   sig { params(records: T.any(ActionText::Record, T::Array[ActionText::Record])).returns(T.self_type) }
   def <<(*records); end
