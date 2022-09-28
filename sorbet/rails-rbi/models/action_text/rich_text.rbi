@@ -38,7 +38,7 @@ class ActionText::RichText::ActiveRecord_Relation < ActiveRecord::Relation
   include ActionText::RichText::ActiveRelation_WhereNot
   include ActionText::RichText::CustomFinderMethods
   include ActionText::RichText::QueryMethodsReturningRelation
-  Elem = type_member(fixed: ActionText::RichText)
+  Elem = type_member {{fixed: ActionText::RichText}}
 
   sig { params(args: T.untyped).returns(ActionText::RichText::ActiveRecord_Relation) }
   def with_attached_embeds(*args); end
@@ -48,7 +48,7 @@ class ActionText::RichText::ActiveRecord_AssociationRelation < ActiveRecord::Ass
   include ActionText::RichText::ActiveRelation_WhereNot
   include ActionText::RichText::CustomFinderMethods
   include ActionText::RichText::QueryMethodsReturningAssociationRelation
-  Elem = type_member(fixed: ActionText::RichText)
+  Elem = type_member {{fixed: ActionText::RichText}}
 
   sig { params(args: T.untyped).returns(ActionText::RichText::ActiveRecord_AssociationRelation) }
   def with_attached_embeds(*args); end
@@ -57,7 +57,7 @@ end
 class ActionText::RichText::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
   include ActionText::RichText::CustomFinderMethods
   include ActionText::RichText::QueryMethodsReturningAssociationRelation
-  Elem = type_member(fixed: ActionText::RichText)
+  Elem = type_member {{fixed: ActionText::RichText}}
 
   sig { params(args: T.untyped).returns(ActionText::RichText::ActiveRecord_AssociationRelation) }
   def with_attached_embeds(*args); end
@@ -175,6 +175,12 @@ module ActionText::RichText::QueryMethodsReturningRelation
   sig { params(args: T.any(String, Symbol, T::Array[T.any(String, Symbol)])).returns(ActionText::RichText::ActiveRecord_Relation) }
   def select_columns(*args); end
 
+  sig { params(args: Symbol).returns(ActionText::RichText::ActiveRecord_Relation) }
+  def where_missing(*args); end
+
+  sig { params(column: Symbol, values: T::Array[T.untyped]).returns(ActionText::RichText::ActiveRecord_Relation) }
+  def in_order_of(column, values); end
+
   sig { params(args: T.untyped, block: T.nilable(T.proc.void)).returns(ActionText::RichText::ActiveRecord_Relation) }
   def extending(*args, &block); end
 
@@ -290,6 +296,12 @@ module ActionText::RichText::QueryMethodsReturningAssociationRelation
 
   sig { params(args: T.any(String, Symbol, T::Array[T.any(String, Symbol)])).returns(ActionText::RichText::ActiveRecord_AssociationRelation) }
   def select_columns(*args); end
+
+  sig { params(args: Symbol).returns(ActionText::RichText::ActiveRecord_AssociationRelation) }
+  def where_missing(*args); end
+
+  sig { params(column: Symbol, values: T::Array[T.untyped]).returns(ActionText::RichText::ActiveRecord_AssociationRelation) }
+  def in_order_of(column, values); end
 
   sig { params(args: T.untyped, block: T.nilable(T.proc.void)).returns(ActionText::RichText::ActiveRecord_AssociationRelation) }
   def extending(*args, &block); end
