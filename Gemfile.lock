@@ -284,6 +284,9 @@ GEM
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     sqlite3 (1.5.0-x86_64-linux)
+    stimpack (0.7.1)
+      activesupport
+      railties
     stimulus-rails (1.1.0)
       railties (>= 6.0.0)
     strscan (3.0.4)
@@ -358,6 +361,7 @@ DEPENDENCIES
   sorbet-runtime
   sprockets-rails
   sqlite3 (~> 1.4)
+  stimpack
   stimulus-rails
   tapioca
   trueskill

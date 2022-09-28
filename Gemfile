@@ -86,3 +86,4 @@ gem 'sorbet', :group => :development
 gem 'tapioca'
 gem 'sorbet-rails'
 
+gem 'stimpack'
