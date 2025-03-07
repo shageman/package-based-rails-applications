@@ -125,20 +125,7 @@ digraph package_diagram {
       style=filled
         label="utility"
         cluster=true
-        rank = 3        "packs/predictor" [
-            fontsize=12.0
-            label= <
-                <table border='0' cellborder='1' cellspacing='0' cellpadding='16'><tr><td>
-                  <table border='0' cellborder='1' cellspacing='0' cellpadding='4'>
-                    <tr> <td port='private'> packs/predictor </td> </tr>
-                  </table>
-                  </td></tr>
-                  <tr><td CELLPADDING='1' ALIGN='RIGHT'>D: 0, R: 0, T: 0</td></tr>
-                  </table>
-              >
-          ]
-        
-        "packs/predictor_interface" [
+        rank = 3        "packs/predictor_interface" [
             fontsize=12.0
             label= <
                 <table border='0' cellborder='1' cellspacing='0' cellpadding='16'><tr><td>
@@ -160,8 +147,6 @@ digraph package_diagram {
           ]
         
     }
-              "packs/games" -> "packs/predictor" [ style=invis ]
-              "packs/teams" -> "packs/predictor" [ style=invis ]
               "packs/games" -> "packs/predictor_interface" [ style=invis ]
               "packs/teams" -> "packs/predictor_interface" [ style=invis ]
               "packs/games" -> "packs/rails_shims" [ style=invis ]
@@ -174,7 +159,6 @@ digraph package_diagram {
         cluster=false
     }
           "." -> "packs/prediction_ui" [ color=darkgreen ]
-          "." -> "packs/predictor" [ color=darkgreen ]
           "packs/games" -> "packs/predictor_interface" [ color=darkgreen ]
           "packs/games" -> "packs/rails_shims" [ color=darkgreen ]
           "packs/games" -> "packs/teams" [ color=darkgreen ]
@@ -184,13 +168,11 @@ digraph package_diagram {
           "packs/prediction_ui" -> "packs/predictor_interface" [ color=darkgreen ]
           "packs/prediction_ui" -> "packs/rails_shims" [ color=darkgreen ]
           "packs/prediction_ui" -> "packs/teams" [ color=darkgreen ]
-          "packs/predictor" -> "packs/predictor_interface" [ color=darkgreen ]
           "packs/teams" -> "packs/predictor_interface" [ color=darkgreen ]
           "packs/teams" -> "packs/rails_shims" [ color=darkgreen ]
           "packs/teams_admin" -> "packs/rails_shims" [ color=darkgreen ]
           "packs/teams_admin" -> "packs/teams" [ color=darkgreen ]
           "packs/welcome_ui" -> "packs/rails_shims" [ color=darkgreen ]
-        "packs/predictor" -> "." [ color=blue constraint=false ]
     subgraph cluster_legend {
       fontsize=16
       label="Edges Styles and Arrow Heads"

@@ -4,4 +4,3 @@ enforce_layers: true
 layer: app
 dependencies:
 - packs/prediction_ui
-- packs/predictor
