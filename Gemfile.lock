@@ -190,6 +190,10 @@ GEM
       sorbet-runtime
       thor
       tty-prompt
+    packs-rails (0.0.5)
+      activesupport
+      packs
+      railties
     packs-specification (0.0.10)
       sorbet-runtime
     packwerk (3.2.2)
@@ -425,6 +429,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   packs
+  packs-rails
   packwerk
   parse_packwerk
   puma (>= 5.0)

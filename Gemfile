@@ -68,3 +68,7 @@ gem 'parse_packwerk'
 
 
 gem "puppeteer-ruby", "~> 0.45.6"
+
+
+gem 'packs-rails'
+
