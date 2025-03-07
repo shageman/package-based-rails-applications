@@ -28,6 +28,7 @@ require:
   - packwerk/privacy/checker
   - packwerk/layer/checker
   - packwerk/visibility/checker
+  - packwerk/folder_privacy/checker
 
 layers:
   - app
@@ -37,5 +38,6 @@ layers:
 
 package_paths:
 - ./packs/*
+- ./packs/*/packs/*
 - .
 
