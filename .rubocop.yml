@@ -16,3 +16,6 @@ Packs/DocumentedPublicApis:
 
 Packs/TypedPublicApis:
   Enabled: true
+
+Packs/RootNamespaceIsPackName:
+  Enabled: false
