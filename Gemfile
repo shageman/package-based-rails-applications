@@ -85,3 +85,9 @@ gem 'sorbet-runtime'
 gem 'sorbet', :group => :development
 gem 'tapioca', require: false, :group => :development
 
+
+gem "hanami", github: "hanami/hanami", branch: "exclude-more-files-from-zeitwerk"
+gem "hanami-view", github: "hanami/view", branch: "exclude-more-files-from-zeitwerk"
+gem "hanami-controller"
+gem "dry-operation"
+

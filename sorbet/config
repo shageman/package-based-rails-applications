@@ -4,3 +4,5 @@
 --ignore=/VENDORED_GEMS/
 --ignore=/db
 
+--ignore=/slices
+--ignore=/tmp

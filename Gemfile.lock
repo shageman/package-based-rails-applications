@@ -1,3 +1,34 @@
+GIT
+  remote: https://github.com/hanami/hanami.git
+  revision: e0f08242ba348a5e775807ffe5a3090d0feedc9a
+  branch: exclude-more-files-from-zeitwerk
+  specs:
+    hanami (2.2.1)
+      bundler (>= 1.16, < 3)
+      dry-configurable (~> 1.0, >= 1.2.0, < 2)
+      dry-core (~> 1.0, < 2)
+      dry-inflector (~> 1.0, >= 1.1.0, < 2)
+      dry-logger (~> 1.0, < 2)
+      dry-monitor (~> 1.0, >= 1.0.1, < 2)
+      dry-system (~> 1.1)
+      hanami-cli (~> 2.2.1)
+      hanami-utils (~> 2.2)
+      json (>= 2.7.2)
+      zeitwerk (~> 2.6)
+
+GIT
+  remote: https://github.com/hanami/view.git
+  revision: ac2a4bb38351cf424068f0154f0aabc7778d67ce
+  branch: exclude-more-files-from-zeitwerk
+  specs:
+    hanami-view (2.2.0)
+      dry-configurable (~> 1.0)
+      dry-core (~> 1.0)
+      dry-inflector (~> 1.0, < 2)
+      temple (~> 0.10.0, >= 0.10.2)
+      tilt (~> 2.3)
+      zeitwerk (~> 2.6)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -116,9 +147,61 @@ GEM
       reline (>= 0.3.8)
     diff-lcs (1.6.0)
     drb (2.2.1)
+    dry-auto_inject (1.1.0)
+      dry-core (~> 1.1)
+      zeitwerk (~> 2.6)
+    dry-cli (1.2.0)
+    dry-configurable (1.3.0)
+      dry-core (~> 1.1)
+      zeitwerk (~> 2.6)
+    dry-core (1.1.0)
+      concurrent-ruby (~> 1.0)
+      logger
+      zeitwerk (~> 2.6)
+    dry-events (1.1.0)
+      concurrent-ruby (~> 1.0)
+      dry-core (~> 1.1)
+    dry-files (1.1.0)
+    dry-inflector (1.2.0)
+    dry-logger (1.0.4)
+    dry-monads (1.7.1)
+      concurrent-ruby (~> 1.0)
+      dry-core (~> 1.1)
+      zeitwerk (~> 2.6)
+    dry-monitor (1.0.1)
+      dry-configurable (~> 1.0, < 2)
+      dry-core (~> 1.0, < 2)
+      dry-events (~> 1.0, < 2)
+    dry-operation (1.0.0)
+      dry-monads (~> 1.6)
+      zeitwerk (~> 2.6)
+    dry-system (1.2.2)
+      dry-auto_inject (~> 1.1)
+      dry-configurable (~> 1.3)
+      dry-core (~> 1.1)
+      dry-inflector (~> 1.1)
+    dry-transformer (1.0.1)
+      zeitwerk (~> 2.6)
     erubi (1.13.1)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    hanami-cli (2.2.1)
+      bundler (~> 2.1)
+      dry-cli (~> 1.0, >= 1.1.0)
+      dry-files (~> 1.0, >= 1.0.2, < 2)
+      dry-inflector (~> 1.0, < 2)
+      rake (~> 13.0)
+      zeitwerk (~> 2.6)
+    hanami-controller (2.2.0)
+      dry-configurable (~> 1.0, < 2)
+      dry-core (~> 1.0)
+      hanami-utils (~> 2.2)
+      rack (~> 2.0)
+      zeitwerk (~> 2.6)
+    hanami-utils (2.2.0)
+      concurrent-ruby (~> 1.0)
+      dry-core (~> 1.0, < 2)
+      dry-transformer (~> 1.0, < 2)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
     importmap-rails (2.1.0)
@@ -474,6 +557,10 @@ DEPENDENCIES
   brakeman
   capybara
   debug
+  dry-operation
+  hanami!
+  hanami-controller
+  hanami-view!
   importmap-rails
   jbuilder
   packs
