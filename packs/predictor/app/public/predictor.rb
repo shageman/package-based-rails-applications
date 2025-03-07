@@ -1,6 +1,8 @@
 require "saulabs/trueskill"
 
 class Predictor
+  # Pass in a list of teams and the games that they played against each other to learn relative team strengths
+  # Ensure that all teams are in the teams list if they participate in any games. Otherwise you will get a runtime error
   def learn(teams, games)
     @teams_lookup = teams.inject({}) do |memo, team|
       memo[team.id] = {
@@ -20,6 +22,7 @@ class Predictor
     end
   end
 
+  # Pass in two teams to predict the outcome of their next game based on their learned relative team strengths
   def predict(first_team, second_team)
     team1 = @teams_lookup[first_team.id][:team]
     team2 = @teams_lookup[second_team.id][:team]

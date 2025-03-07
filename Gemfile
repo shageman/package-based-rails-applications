@@ -76,3 +76,7 @@ gem 'packs-rails'
 
 gem 'packwerk-extensions', group: [:development, :test]
 
+
+gem 'rubocop-packs', require: false, group: [:development, :test]
+gem 'rubocop', require: false, group: [:development, :test]
+

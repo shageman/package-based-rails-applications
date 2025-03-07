@@ -5,7 +5,7 @@ digraph package_diagram {
     fontname="Helvetica,Arial,sans-serif"
     dpi=100
     layout=dot
-    label=<<b>All packs</b><br/><br/><font point-size='12'>Widest todo edge is 1 todo</font>>
+    label=<<b>All packs</b><br/>>
     fontsize=18
   ]
   node [
@@ -30,6 +30,7 @@ digraph package_diagram {
             label= <
                 <table border='0' cellborder='1' cellspacing='0' cellpadding='4'>
                   <tr> <td align='left'> . </td> </tr>
+                  <tr><td CELLPADDING='1' ALIGN='RIGHT'>D: 0</td></tr>
                 </table>
               >
           ]
@@ -132,6 +133,7 @@ digraph package_diagram {
                     <tr> <td port='private'> packs/predictor </td> </tr>
                   </table>
                   </td></tr>
+                  <tr><td CELLPADDING='1' ALIGN='RIGHT'>D: 1</td></tr>
                   </table>
               >
           ]
@@ -169,12 +171,7 @@ digraph package_diagram {
           "packs/teams_admin" -> "packs/rails_shims" [ color=darkgreen ]
           "packs/teams_admin" -> "packs/teams" [ color=darkgreen ]
           "packs/welcome_ui" -> "packs/rails_shims" [ color=darkgreen ]
-            "packs/prediction_ui" -> "packs/predictor" [
-                constraint=false
-              # headlabel="visibility"
-color=darkred style=dashed arrowhead=tee
-              penwidth=1            ]
-        "packs/predictor" -> "packs/games_admin" [ color=blue constraint=false ]
+        "packs/predictor" -> "packs/prediction_ui" [ color=blue constraint=false ]
     subgraph cluster_legend {
       fontsize=16
       label="Edges Styles and Arrow Heads"

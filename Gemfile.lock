@@ -315,6 +315,15 @@ GEM
       lint_roller (~> 1.1)
       rubocop (>= 1.72.1, < 2.0)
       rubocop-ast (>= 1.38.0, < 2.0)
+    rubocop-packs (0.0.45)
+      activesupport
+      base64
+      bigdecimal
+      packs-specification
+      parse_packwerk
+      rubocop (~> 1.0)
+      rubocop-sorbet (>= 0.8.4)
+      sorbet-runtime
     rubocop-performance (1.24.0)
       lint_roller (~> 1.1)
       rubocop (>= 1.72.1, < 2.0)
@@ -330,6 +339,8 @@ GEM
       rubocop-minitest
       rubocop-performance
       rubocop-rails
+    rubocop-sorbet (0.8.7)
+      rubocop (>= 1)
     ruby-progressbar (1.13.0)
     rubyzip (2.4.1)
     securerandom (0.4.1)
@@ -442,6 +453,8 @@ DEPENDENCIES
   puppeteer-ruby (~> 0.45.6)
   rails (~> 7.2.2, >= 7.2.2.1)
   rspec-rails
+  rubocop
+  rubocop-packs
   rubocop-rails-omakase
   selenium-webdriver
   shoulda-matchers
