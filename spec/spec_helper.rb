@@ -38,20 +38,37 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
-
-# Adjust RSpec configuration for package folder structure
-RSpec.configure do |config|
-  config.define_derived_metadata(file_path: Regexp.new('/packages/.*/spec/controllers')) { |metadata| metadata[:type] = :controller }
-  config.define_derived_metadata(file_path: Regexp.new('/packages/.*/spec/models')) { |metadata| metadata[:type] = :model }
-  config.define_derived_metadata(file_path: Regexp.new('/packages/.*/spec/requests')) { |metadata| metadata[:type] = :request }
-  config.define_derived_metadata(file_path: Regexp.new('/packages/.*/spec/routing')) { |metadata| metadata[:type] = :routing }
-  config.define_derived_metadata(file_path: Regexp.new('/packages/.*/spec/system')) { |metadata| metadata[:type] = :system }
-  config.define_derived_metadata(file_path: Regexp.new('/packages/.*/spec/views')) { |metadata| metadata[:type] = :view }
-
-  config.before(:each, :type => lambda {|v| v == :view}) do
-    Dir.glob(Rails.root + ('packages/*/app/views')).each do |path|
-      view.lookup_context.view_paths.push path
-    end
+def wait_for_turbolinks timeout = nil
+  if has_css?('.turbolinks-progress-bar', visible: true, wait: (0.25).seconds)
+    has_no_css?('.turbolinks-progress-bar', wait: timeout.presence || 5.seconds)
   end
+end
+
+
+
+
+require 'capybara/rspec'
+require 'selenium/webdriver'
+
+Capybara.default_driver = :rack_test # for non-JS tests
+Capybara.javascript_driver = :headless_chrome
+
+# Register a new driver for headless Chrome
+Capybara.register_driver :headless_chrome do |app|
+  options = ::Selenium::WebDriver::Chrome::Options.new
+  # The list of arguments below are commonly used in CI
+  %w[ headless disable-gpu no-sandbox disable-dev-shm-usage window-size=1280,800 ].each do |arg|
+    options.add_argument(arg)
+  end
+
+  # If you are running your specs in Docker, you might also want:
+  # options.add_argument('--remote-debugging-port=9222')
+  # (helpful for debugging in certain setups)
+
+  Capybara::Selenium::Driver.new(
+    app,
+    browser: :chrome,
+    options: options
+  )
 end
 
