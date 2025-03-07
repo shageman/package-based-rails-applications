@@ -4,3 +4,4 @@
 --ignore=/VENDORED_GEMS/
 --ignore=/db
 
+--ignore=/eventide-backend

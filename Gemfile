@@ -85,3 +85,4 @@ gem 'sorbet-runtime'
 gem 'sorbet', :group => :development
 gem 'tapioca', require: false, :group => :development
 
+gem 'prediction_component', path: 'eventide-backend/prediction_component'
